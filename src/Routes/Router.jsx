@@ -5,45 +5,52 @@ import CategoryNews from "../pages/CategoryNews";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import NewsDetailsLayout from "../layouts/NewsDetailsLayout";
+import PrivateRoute from "../provider/PrivateRoute";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <HomeLayout></HomeLayout>,
-        children: [
-            {
-                path: "",
-                element: <Home></Home>,
-            },
-            {
-                path:"/category/:id",
-                element: <CategoryNews></CategoryNews>,
-                loader: ()=> fetch('/news.json')
-            }
-        ]
-    },
-    {
-        path: "/auth",
-        element: <AuthLayout></AuthLayout>,
-        children:[
-            {
-                path:"/auth/login",
-                element:<Login></Login>
-            },
-            {
-                path:"/auth/register",
-                Component: Register
-            },
-        ]
-    },
-    {
-        path:"/news",
-        element: <h2>News Layout</h2>
-    },
-    {
-        path:"/*",
-        element: <h2>Error-404</h2>
-    },
+  {
+    path: "/",
+    element: <HomeLayout></HomeLayout>,
+    children: [
+      {
+        path: "",
+        element: <Home></Home>,
+      },
+      {
+        path: "/category/:id",
+        element: <CategoryNews></CategoryNews>,
+        loader: () => fetch("/news.json"),
+      },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout></AuthLayout>,
+    children: [
+      {
+        path: "/auth/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/auth/register",
+        Component: Register,
+      },
+    ],
+  },
+  {
+    path: "/news-details/:id",
+    element: (
+      <PrivateRoute>
+        <NewsDetailsLayout></NewsDetailsLayout>
+      </PrivateRoute>
+    ),
+    loader: () => fetch("/news.json"),
+  },
+  {
+    path: "/*",
+    element: <h2>Error-404</h2>,
+  },
 ]);
 
 export default router;

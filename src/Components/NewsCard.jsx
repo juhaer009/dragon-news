@@ -1,8 +1,9 @@
 import { FaEye, FaRegBookmark } from "react-icons/fa";
 import { IoShareSocialOutline, IoStar } from "react-icons/io5";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
-  const { title, rating, total_view, author, thumbnail_url, details } = news;
+  const { id, title, rating, total_view, author, thumbnail_url, details } = news;
 
   const formattedDate = new Date(author.published_date).toLocaleDateString(
     "en-US",
@@ -46,9 +47,9 @@ const NewsCard = ({ news }) => {
           {details.length > 200 ? (
             <>
               {details.slice(0, 200)}...
-              <span className="text-primary font-medium cursor-pointer">
+              <Link to={`/news-details/${id}`} className="text-primary font-medium cursor-pointer">
                 Read More
-              </span>
+              </Link>
             </>
           ) : (
             details
